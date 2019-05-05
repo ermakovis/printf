@@ -6,7 +6,7 @@
 /*   By: tcase <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/02 18:39:45 by tcase             #+#    #+#             */
-/*   Updated: 2019/05/04 18:29:09 by tcase            ###   ########.fr       */
+/*   Updated: 2019/05/05 16:23:53 by tcase            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,12 +31,15 @@ typedef struct					s_pf
 	int							width;
 	int							prec;
 	int							length;
-	char						type;
+    char						type;
 }								t_pf;
 
 int								ft_print_result(va_list valist, t_pf *pf);
 int								ft_print_string(va_list valist, t_pf *pf);
+int								ft_printf_digit(t_pf *pf);
 int								ft_parse_format(char **line, t_pf *pf);
 int								ft_printf(const char *format, ...);
+int								ft_printf_unsigned_number(va_list valist, t_pf *pf);
+int								ft_printf_signed_number(va_list valist, t_pf *pf);
 
 #endif

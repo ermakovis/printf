@@ -1,45 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_numlen.c                                        :+:      :+:    :+:   */
+/*   ft_abs.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tcase <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/05/03 13:19:22 by tcase             #+#    #+#             */
-/*   Updated: 2019/05/05 15:00:37 by tcase            ###   ########.fr       */
+/*   Created: 2019/05/04 19:00:58 by tcase             #+#    #+#             */
+/*   Updated: 2019/05/04 19:02:05 by tcase            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
-#include "libft.h"
-
-int			ft_nbrlen(intmax_t num, int base)
-{
-	int i;
-
-	i = 1;
-	if (num < 0)
-	{
-		i++;
-		num = -num;
-	}
-	while (num > base - 1)
-	{
-		num /= base;
-		i++;
-	}
-	return (i);
-}
-
-int			ft_unbrlen(uintmax_t num, int base)
-{
-	int i;
-
-	i = 1;
-	while (num > base - 1)
-	{
-		num /= base;
-		i++;
-	}
-	return (i);
-}
