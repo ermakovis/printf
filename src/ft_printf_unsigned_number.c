@@ -6,7 +6,7 @@
 /*   By: tcase <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/05 16:13:32 by tcase             #+#    #+#             */
-/*   Updated: 2019/05/05 19:26:39 by tcase            ###   ########.fr       */
+/*   Updated: 2019/05/10 20:55:21 by tcase            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int		ft_printf_uitoa(uintmax_t num, t_pf *pf)
 	while (size-- > 0)
 	{
 		pf->buff[size] = tab[num % base];
-		num /=base;
+		num /= base;
 	}
 	return (ft_printf_digit(pf));
 }

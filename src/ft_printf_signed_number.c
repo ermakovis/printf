@@ -6,7 +6,7 @@
 /*   By: tcase <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/05 16:18:46 by tcase             #+#    #+#             */
-/*   Updated: 2019/05/05 19:58:55 by tcase            ###   ########.fr       */
+/*   Updated: 2019/05/10 21:15:29 by tcase            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int		ft_printf_itoa(intmax_t num, t_pf *pf)
 	if (num < -9223372036854775807)
 	{
 		pf->buff = ft_strdup("-9223372036854775808");
-		return ft_printf_digit(pf);
+		return (ft_printf_digit(pf));
 	}
 	size = ft_nbrlen(num, 10);
 	if (num < 0)
@@ -46,7 +46,7 @@ int		ft_printf_signed_number(va_list valist, t_pf *pf)
 	if (pf->length == 3)
 		return (ft_printf_itoa(va_arg(valist, long int), pf));
 	if (pf->length == 4)
-		return (ft_printf_itoa((short int)va_arg(valist,  int), pf));
+		return (ft_printf_itoa((short int)va_arg(valist, int), pf));
 	if (pf->length == 5)
 		return (ft_printf_itoa(va_arg(valist, intmax_t), pf));
 	if (pf->length == 6)

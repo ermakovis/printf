@@ -6,7 +6,7 @@
 /*   By: tcase <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/02 19:13:06 by tcase             #+#    #+#             */
-/*   Updated: 2019/05/05 21:27:37 by tcase            ###   ########.fr       */
+/*   Updated: 2019/05/10 22:09:20 by tcase            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@ int		main(void)
 {
 	//char str[] = "QWE";
 	//int	i;
-
-	printf("   printf -- %p\n", NULL);
-	ft_printf("ft_printf -- %p\n", NULL);
+	
+	printf("%C", L'猫');
+	ft_printf("%C", L'猫');
 	return (0);	
 }

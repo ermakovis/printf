@@ -6,17 +6,17 @@
 /*   By: tcase <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/02 18:03:20 by tcase             #+#    #+#             */
-/*   Updated: 2019/05/05 16:16:07 by tcase            ###   ########.fr       */
+/*   Updated: 2019/05/10 21:18:21 by tcase            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_printf.h"
 
-static t_pf		*init_pf(void)	
+static t_pf		*init_pf(void)
 {
 	t_pf *new;
 
-	if(!(new = (t_pf*)malloc(sizeof(t_pf))))
+	if (!(new = (t_pf*)malloc(sizeof(t_pf))))
 		return (NULL);
 	new->form = NULL;
 	new->len = 0;
@@ -32,7 +32,7 @@ static t_pf		*init_pf(void)
 	return (new);
 }
 
-int			ft_printf(const char *format, ... )
+int			ft_printf(const char *format, ...)
 {
 	va_list valist;
 	t_pf	*pf;
@@ -47,11 +47,11 @@ int			ft_printf(const char *format, ... )
 	{
 		if (*line == '%')
 		{
-			if(!(pf = init_pf()))
+			if (!(pf = init_pf()))
 				return (-1);
 			line++;
-			ft_parse_format(&line, pf);
-			i += ft_print_result(valist, pf);
+			if (ft_parse_format(&line, pf))
+				i += ft_print_result(valist, pf);
 			free(pf);
 		}
 		else

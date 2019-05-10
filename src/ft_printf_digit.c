@@ -6,7 +6,7 @@
 /*   By: tcase <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/05 12:08:58 by tcase             #+#    #+#             */
-/*   Updated: 2019/05/05 21:32:57 by tcase            ###   ########.fr       */
+/*   Updated: 2019/05/10 20:59:10 by tcase            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void	ft_printf_dflags(t_pf *pf)
 	if (ft_strchr("di", pf->type) == 0 && (pf->plus != 1 || pf->space != 1))
 		return ;
 	if ((pf->space == 1 || pf->plus == 1) && pf->buff[0] != '-')
-	{	
+	{
 		tmp = ft_strnew(len + 1);
 		ft_memcpy(&tmp[1], pf->buff, len);
 		if (pf->space == 1 && pf->plus == 0)
@@ -55,8 +55,6 @@ void	ft_printf_dflags(t_pf *pf)
 		pf->buff = tmp;
 	}
 }
-
-// fix "0x" placement
 
 void	ft_printf_udflags(t_pf *pf)
 {
@@ -93,11 +91,11 @@ void	ft_printf_dwidth(t_pf *pf)
 
 	len = ft_strlen(pf->buff);
 	if (pf->width < len)
-		return;
+		return ;
 	tmp = ft_strnew(pf->width);
 	if (pf->zero == 1 && pf->minus == 0 && pf->prec < 0)
 		ft_memset(tmp, '0', pf->width);
-	else 
+	else
 		ft_memset(tmp, ' ', pf->width);
 	if (pf->minus == 1)
 		ft_memcpy(tmp, pf->buff, len);
@@ -116,6 +114,7 @@ void	ft_printf_dwidth(t_pf *pf)
 int		ft_printf_digit(t_pf *pf)
 {
 	int len;
+
 	if (!(ft_strcmp(pf->buff, "0")) && pf->prec == 0)
 	{
 		free(pf->buff);

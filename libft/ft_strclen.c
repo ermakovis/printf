@@ -6,17 +6,17 @@
 /*   By: tcase <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/03 10:32:37 by tcase             #+#    #+#             */
-/*   Updated: 2019/05/03 11:29:47 by tcase            ###   ########.fr       */
+/*   Updated: 2019/05/10 20:52:41 by tcase            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int			ft_strclen(char *str, char *str2 )
+int			ft_strclen(char *str, char *str2)
 {
 	int i;
 	int	j;
 
 	if (!str || !*str || !str2 || !*str2)
-		return (-1);
+		return (0);
 	i = 0;
 	while (str[i])
 	{
@@ -32,5 +32,5 @@ int			ft_strclen(char *str, char *str2 )
 		}
 		i++;
 	}
-	return (i);
+	return (0);
 }
