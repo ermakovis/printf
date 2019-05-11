@@ -6,7 +6,7 @@
 /*   By: tcase <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/03 11:48:30 by tcase             #+#    #+#             */
-/*   Updated: 2019/05/10 21:56:06 by tcase            ###   ########.fr       */
+/*   Updated: 2019/05/11 19:21:30 by tcase            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,22 +36,59 @@ static int			ft_parse_flags(t_pf *pf)
 	return (i);
 }
 
-static int			ft_parse_width_prec(t_pf *pf)
+static int			ft_parse_width(t_pf *pf, va_list valist)
+{
+	char	*tmp;
+	int		i;
+	int		flag;
+
+	flag = 0;
+	tmp = pf->form;
+	if (ft_isdigit(tmp[0]))
+	{
+		pf->width = ft_atoi(tmp);
+		tmp += ft_nbrlen(pf->width, 10);
+	}
+	if (tmp[0] == '*')
+	{
+		if ((i = va_arg(valist, int)) < 0)
+		{
+			pf->minus = 1;
+			i = -i;
+		}
+		pf->width = i;
+		tmp++;
+	}
+	if (ft_isdigit(tmp[0]))
+	{
+		pf->width = ft_atoi(tmp);
+		tmp += ft_nbrlen(pf->width, 10);
+	}
+	pf->form = tmp;
+	return (0);
+}
+
+static int			ft_parse_prec(t_pf *pf, va_list valist)
 {
 	char	*tmp;
 
 	tmp = pf->form;
-	pf->width = ft_atoi(tmp);
-	if (pf->width > 0)
-		tmp += ft_nbrlen(pf->width, 10);
 	if (tmp[0] != '.')
 	{
 		pf->form = tmp;
 		return (0);
 	}
 	tmp++;
-	pf->prec = ft_atoi(tmp);
-	tmp += ft_nbrlen(pf->prec, 10);
+	if (tmp[0] == '*')
+	{
+		pf->prec = va_arg(valist, int);;
+		tmp++;
+	}
+	else
+	{
+		pf->prec = ft_atoi(tmp);
+		tmp += ft_nbrlen(pf->prec, 10);
+	}
 	pf->form = tmp;
 	return (0);
 }
@@ -62,7 +99,7 @@ static int			ft_parse_length(t_pf *pf)
 
 	tmp = pf->form;
 	if ((ft_strclen(tmp, "lhjz") == 0) &&\
-			(ft_strclen(tmp, "sScCpdDioOuUxX%") > 1))
+			(ft_strclen(tmp, "fFsScCpdDioOuUxX%") > 1))
 		return (0);
 	if (ft_strncmp(tmp, "l", 1) == 0)
 		pf->length = 3;
@@ -84,18 +121,19 @@ static int			ft_parse_length(t_pf *pf)
 	return (1);
 }
 
-int					ft_parse_format(char **line, t_pf *pf)
+int					ft_parse_format(char **line, t_pf *pf, va_list valist)
 {
 	char	*tmp;
 
-	if (!((pf->len = ft_strclen(*line, "sScCPpdDioOuUxX%"))))
+	if (!((pf->len = ft_strclen(*line, "fFsScCPpdDioOuUxX%"))))
 		return (0);
 	pf->form = ft_strnew(pf->len);
 	tmp = pf->form;
 	ft_memcpy(pf->form, *line, pf->len);
 	pf->type = tmp[pf->len - 1];
 	ft_parse_flags(pf);
-	ft_parse_width_prec(pf);
+	ft_parse_width(pf, valist);
+	ft_parse_prec(pf, valist);
 	if (!(ft_parse_length(pf)))
 		return (0);
 	if (pf->type == 'p')

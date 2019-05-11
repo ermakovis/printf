@@ -6,7 +6,7 @@
 /*   By: tcase <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/14 11:37:29 by tcase             #+#    #+#             */
-/*   Updated: 2019/05/10 17:07:38 by tcase            ###   ########.fr       */
+/*   Updated: 2019/05/11 13:14:04 by tcase            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,5 +91,6 @@ void				ft_putwstr(wchar_t *wstr);
 int					ft_wchrlen(wchar_t wch);
 int					ft_wstrlen(wchar_t *wstr);
 wchar_t				*ft_wstrnew(size_t size);
+int					ft_power(int n, int power);
 
 #endif

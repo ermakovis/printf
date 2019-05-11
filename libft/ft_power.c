@@ -1,25 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_power.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tcase <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/05/02 19:13:06 by tcase             #+#    #+#             */
-/*   Updated: 2019/05/11 19:59:57 by tcase            ###   ########.fr       */
+/*   Created: 2019/05/11 13:13:01 by tcase             #+#    #+#             */
+/*   Updated: 2019/05/11 14:44:33 by tcase            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "includes/ft_printf.h"
-#include "limits.h"
+#include "libft.h"
 
-
-int		main(void)
+int	ft_power(int n, int power)
 {
-	//char str[] = "QWE";
-	//int	i;
-	
-	ft_printf("{%30S}", L"我是一只猫。");
-	printf("{%30S}", L"我是一只猫。");
-	return (0);	
+	int tmp;
+
+	tmp = n;
+	if (power == 0)
+		return (1);
+	while (power-- > 1)
+		n = n * tmp;
+	return (n);
 }
+

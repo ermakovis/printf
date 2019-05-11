@@ -6,7 +6,7 @@
 /*   By: tcase <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/05 12:08:58 by tcase             #+#    #+#             */
-/*   Updated: 2019/05/10 20:59:10 by tcase            ###   ########.fr       */
+/*   Updated: 2019/05/11 19:48:20 by tcase            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,11 +101,13 @@ void	ft_printf_dwidth(t_pf *pf)
 		ft_memcpy(tmp, pf->buff, len);
 	else
 		ft_memcpy(&tmp[pf->width - len], pf->buff, len);
-	if (tmp[pf->width - len + 1] == 'x' && tmp[1] == '0')
+	if (tmp[pf->width - len + 1] == 'x' && tmp[1] == '0' && tmp[0] == '0')
 		ft_swap(&tmp[1], &tmp[pf->width - len + 1]);
-	if (tmp[pf->width - len] == '-' && tmp[0] == '0')
+	if (tmp[pf->width - len] == ' ' && tmp[0] == '0' && pf->space == 1)
 		ft_swap(&tmp[0], &tmp[pf->width - len]);
-	if (tmp[pf->width - len] == '+' && tmp[0] == '0')
+	if (tmp[pf->width - len] == '+' && tmp[0] == '0' && pf->plus == 1)
+		ft_swap(&tmp[0], &tmp[pf->width - len]);
+	if (tmp[pf->width - len] == '-' && tmp[0] == '0')
 		ft_swap(&tmp[0], &tmp[pf->width - len]);
 	free(pf->buff);
 	pf->buff = tmp;
