@@ -6,7 +6,7 @@
 /*   By: tcase <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/10 13:45:55 by tcase             #+#    #+#             */
-/*   Updated: 2019/05/12 17:24:58 by tcase            ###   ########.fr       */
+/*   Updated: 2019/05/12 20:31:20 by tcase            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,13 +41,11 @@ int				ft_wchrlen(wchar_t wch)
 	return (len);
 }
 
-char		*ft_convert_wchar(wchar_t wch)
+char			*ft_convert_wchar(wchar_t wch, int len)
 {
-	int		len;
 	char	*new;
 
 	new = ft_strnew(3);
-	len = 0;
 	if (wch <= 0x7F)
 		new[len++] = wch;
 	else if (wch <= 0x7FF)
@@ -86,12 +84,13 @@ char			*ft_convert_wstr(wchar_t *wstr, t_pf *pf)
 		pf->prec < len ? len = pf->prec : len;
 	str = ft_strnew(len);
 	while (*wstr)
-	{					
-		tmp = ft_convert_wchar(*wstr);
+	{
+		tmp = ft_convert_wchar(*wstr, 0);
 		tmplen = ft_strlen(tmp);
 		if (len < i + tmplen)
 			return (str);
 		ft_memcpy(&str[i], tmp, ft_strlen(tmp));
+		free(tmp);
 		i += tmplen;
 		wstr++;
 	}
@@ -103,6 +102,7 @@ void			ft_putwchar(wchar_t wch)
 	int		len;
 	char	*new;
 
-	new = ft_convert_wchar(wch);
+	new = ft_convert_wchar(wch, 0);
+	free(new);
 	write(1, new, ft_strlen(new));
 }

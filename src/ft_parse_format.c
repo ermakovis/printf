@@ -6,7 +6,7 @@
 /*   By: tcase <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/03 11:48:30 by tcase             #+#    #+#             */
-/*   Updated: 2019/05/12 16:49:03 by tcase            ###   ########.fr       */
+/*   Updated: 2019/05/12 20:18:52 by tcase            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ static int			ft_parse_flags(t_pf *pf, char **line)
 {
 	int		i;
 	char	*tmp;
-	
+
 	tmp = *line;
 	i = 0;
 	while (tmp[i] == ' ' || tmp[i] == '#' || tmp[i] == '-' \
@@ -38,13 +38,11 @@ static int			ft_parse_flags(t_pf *pf, char **line)
 	return (i);
 }
 
-static int			ft_parse_width(t_pf *pf, char **line, va_list valist)
+static void			ft_parse_width(t_pf *pf, char **line, va_list valist)
 {
 	char	*tmp;
 	int		i;
-	int		flag;
 
-	flag = 0;
 	tmp = *line;
 	if (ft_isdigit(tmp[0]))
 	{
@@ -67,7 +65,6 @@ static int			ft_parse_width(t_pf *pf, char **line, va_list valist)
 		tmp += ft_nbrlen(pf->width, 10);
 	}
 	*line = tmp;
-	return (0);
 }
 
 static int			ft_parse_prec(t_pf *pf, char **line, va_list valist)
@@ -84,7 +81,7 @@ static int			ft_parse_prec(t_pf *pf, char **line, va_list valist)
 	tmp++;
 	if (tmp[0] == '*')
 	{
-		pf->prec = va_arg(valist, int);;
+		pf->prec = va_arg(valist, int);
 		tmp++;
 	}
 	else if (ft_isdigit(tmp[0]))

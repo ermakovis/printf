@@ -6,7 +6,7 @@
 /*   By: tcase <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/05 12:08:58 by tcase             #+#    #+#             */
-/*   Updated: 2019/05/11 19:48:20 by tcase            ###   ########.fr       */
+/*   Updated: 2019/05/12 19:01:45 by tcase            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,7 +130,9 @@ int		ft_printf_digit(t_pf *pf)
 	{
 		ft_strtoupper(pf->buff);
 	}
-	ft_putstr(pf->buff);
 	len = ft_strlen(pf->buff);
+	write(1, pf->buff, len);
+	if (*(pf->buff))
+		free(pf->buff);
 	return (len);
 }

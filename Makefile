@@ -6,7 +6,7 @@
 #    By: tcase <marvin@42.fr>                       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/04/06 11:31:10 by tcase             #+#    #+#              #
-#    Updated: 2019/05/12 13:56:49 by tcase            ###   ########.fr        #
+#    Updated: 2019/05/12 20:49:12 by tcase            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,10 +20,9 @@ LIB_DIR=./libft
 INC_DIR=./includes
 OBJ_DIR =./obj
 
-SRC_NAME=ft_printf.c ft_parse_format.c ft_print_result.c \
-		 ft_print_string.c ft_printf_digit.c ft_printf_unsigned_number.c \
-		 ft_printf_signed_number.c ft_print_float.c ft_printf_cleanup.c \
-		 ft_print_wchar.c
+SRC_NAME=ft_printf.c ft_parse_format.c ft_print_string.c ft_print_digit.c \
+		 ft_print_unsigned_number.c ft_print_signed_number.c ft_print_float.c \
+		 ft_print_cleanup.c ft_print_wchar.c
 LIB_NAME=ft_atoi.c ft_bzero.c ft_isalnum.c ft_isalpha.c \
 		 ft_isascii.c ft_isdigit.c ft_isprint.c ft_itoa.c \
 		 ft_lstnew.c ft_memalloc.c ft_memccpy.c \
@@ -71,10 +70,10 @@ fclean: clean
 		rm -f $(NAME)
 
 test: all
-	gcc -o test main.c $(NAME) && ./test
+	gcc -o test main.c $(NAME) $(FLAGS) && ./test
 
 vtest: all
-	gcc -o test main.c $(NAME) $(FLAGS)  && valgrind ./test
+	gcc -o test -ggdb3 -std=c11 main.c $(NAME) $(FLAGS)  && valgrind --leak-check=full ./test
 
 norme:
 	norminette $(SRC) $(LIB) $(INC)

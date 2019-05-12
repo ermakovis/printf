@@ -6,7 +6,7 @@
 /*   By: tcase <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/05 16:18:46 by tcase             #+#    #+#             */
-/*   Updated: 2019/05/11 17:25:21 by tcase            ###   ########.fr       */
+/*   Updated: 2019/05/12 19:03:04 by tcase            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int		ft_printf_itoa(intmax_t num, t_pf *pf)
 	pf->buff = ft_strnew(size);
 	pf->buff[0] = '-';
 	if (num == 0)
-		pf->buff = ft_strdup("0");
+		ft_memset(pf->buff, '0', 1);
 	while (num > 0)
 	{
 		pf->buff[--size] = (num % 10) + '0';
