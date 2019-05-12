@@ -6,7 +6,7 @@
 /*   By: tcase <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/10 13:45:55 by tcase             #+#    #+#             */
-/*   Updated: 2019/05/12 14:15:31 by tcase            ###   ########.fr       */
+/*   Updated: 2019/05/12 17:24:58 by tcase            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ char		*ft_convert_wchar(wchar_t wch)
 	int		len;
 	char	*new;
 
-	new = (char*)malloc(ft_wchrlen(wch));
+	new = ft_strnew(3);
 	len = 0;
 	if (wch <= 0x7F)
 		new[len++] = wch;

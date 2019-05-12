@@ -6,7 +6,7 @@
 /*   By: tcase <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/14 11:37:29 by tcase             #+#    #+#             */
-/*   Updated: 2019/05/11 13:14:04 by tcase            ###   ########.fr       */
+/*   Updated: 2019/05/12 14:11:32 by tcase            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,11 +86,6 @@ int					ft_unbrlen(uintmax_t num, int base);
 int					ft_nbrlen(intmax_t num, int base);
 void				ft_strtoupper(char *str);
 void				ft_swap(char *a, char *b);
-void				ft_putwchar(wchar_t wch);
-void				ft_putwstr(wchar_t *wstr);
-int					ft_wchrlen(wchar_t wch);
-int					ft_wstrlen(wchar_t *wstr);
-wchar_t				*ft_wstrnew(size_t size);
 int					ft_power(int n, int power);
 
 #endif

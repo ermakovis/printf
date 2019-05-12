@@ -6,7 +6,7 @@
 /*   By: tcase <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/02 18:03:20 by tcase             #+#    #+#             */
-/*   Updated: 2019/05/12 11:58:31 by tcase            ###   ########.fr       */
+/*   Updated: 2019/05/12 16:59:29 by tcase            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static t_pf		*init_pf(void)
 	new->width = 0;
 	new->prec = -1;
 	new->length = 0;
-	new->type = 0;
+	new->type = '0';
 	return (new);
 }
 
@@ -50,10 +50,10 @@ int			ft_printf(const char *format, ...)
 			if (!(pf = init_pf()))
 				return (-1);
 			line++;
+			if (!*line)
+				return (i);
 			if (ft_parse_format(&line, pf, valist))
 				i += ft_print_result(valist, pf);
-			else
-				return (0);
 			free(pf);
 		}
 		else

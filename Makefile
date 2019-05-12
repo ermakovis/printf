@@ -6,7 +6,7 @@
 #    By: tcase <marvin@42.fr>                       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/04/06 11:31:10 by tcase             #+#    #+#              #
-#    Updated: 2019/05/11 18:29:57 by tcase            ###   ########.fr        #
+#    Updated: 2019/05/12 13:56:49 by tcase            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,8 @@ OBJ_DIR =./obj
 
 SRC_NAME=ft_printf.c ft_parse_format.c ft_print_result.c \
 		 ft_print_string.c ft_printf_digit.c ft_printf_unsigned_number.c \
-		 ft_printf_signed_number.c ft_print_float.c ft_printf_cleanup.c
+		 ft_printf_signed_number.c ft_print_float.c ft_printf_cleanup.c \
+		 ft_print_wchar.c
 LIB_NAME=ft_atoi.c ft_bzero.c ft_isalnum.c ft_isalpha.c \
 		 ft_isascii.c ft_isdigit.c ft_isprint.c ft_itoa.c \
 		 ft_lstnew.c ft_memalloc.c ft_memccpy.c \
@@ -39,7 +40,7 @@ LIB_NAME=ft_atoi.c ft_bzero.c ft_isalnum.c ft_isalpha.c \
 		 ft_toupper.c ft_lstdelone.c ft_lstdel.c \
 		 ft_lstadd.c ft_lstiter.c ft_lstmap.c ft_lstsize.c \
 		 ft_strclen.c ft_nbrlen.c ft_strtoupper.c ft_swap.c \
-		 ft_putwchar.c ft_power.c 
+		 ft_power.c 
 
 INC_NAME=ft_printf.h
 OBJ_NAME=$(SRC_NAME:.c=.o)

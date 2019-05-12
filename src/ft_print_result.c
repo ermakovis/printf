@@ -6,7 +6,7 @@
 /*   By: tcase <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/03 15:11:50 by tcase             #+#    #+#             */
-/*   Updated: 2019/05/11 15:17:57 by tcase            ###   ########.fr       */
+/*   Updated: 2019/05/12 16:51:06 by tcase            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,5 +22,7 @@ int		ft_print_result(va_list valist, t_pf *pf)
 		return (ft_print_string(valist, pf));
 	else if (ft_strchr("fF", pf->type))
 		return (ft_print_float(va_arg(valist, double), pf));
+	else 
+		return (ft_print_c(pf->type, pf));
 	return (0);
 }

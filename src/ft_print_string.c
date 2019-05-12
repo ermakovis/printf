@@ -6,7 +6,7 @@
 /*   By: tcase <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/03 16:49:12 by tcase             #+#    #+#             */
-/*   Updated: 2019/05/12 14:11:56 by tcase            ###   ########.fr       */
+/*   Updated: 2019/05/12 17:08:28 by tcase            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,8 @@ int		ft_print_s(char *str, t_pf *pf)
 	else
 	{
 		tmp = ft_strnew(pf->width);
-		(pf->zero) ? ft_memset(tmp, '0', pf->width - len) :\
-			ft_memset(tmp, ' ', pf->width - len);
+		(pf->zero) ? ft_memset(tmp, '0', pf->width) :\
+			ft_memset(tmp, ' ', pf->width);
 		if (pf->minus == 1)
 			ft_memcpy(tmp, str, len);
 		else
