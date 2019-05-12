@@ -6,7 +6,7 @@
 /*   By: tcase <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/02 18:03:20 by tcase             #+#    #+#             */
-/*   Updated: 2019/05/11 15:57:53 by tcase            ###   ########.fr       */
+/*   Updated: 2019/05/12 11:58:31 by tcase            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,8 @@ int			ft_printf(const char *format, ...)
 			line++;
 			if (ft_parse_format(&line, pf, valist))
 				i += ft_print_result(valist, pf);
+			else
+				return (0);
 			free(pf);
 		}
 		else

@@ -6,7 +6,7 @@
 /*   By: tcase <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/03 16:49:12 by tcase             #+#    #+#             */
-/*   Updated: 2019/05/11 20:27:58 by tcase            ###   ########.fr       */
+/*   Updated: 2019/05/12 14:11:56 by tcase            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,70 +30,48 @@ int		ft_print_s(char *str, t_pf *pf)
 	else
 	{
 		tmp = ft_strnew(pf->width);
-		ft_memset(tmp, ' ', pf->width);
+		(pf->zero) ? ft_memset(tmp, '0', pf->width - len) :\
+			ft_memset(tmp, ' ', pf->width - len);
 		if (pf->minus == 1)
 			ft_memcpy(tmp, str, len);
 		else
 			ft_memcpy(&tmp[pf->width - len], str, len);
+		len = ft_strlen(tmp);
 	}
 	ft_putstr(tmp);
-	len = ft_strlen(tmp);
 	return (len);
 }
 
 int		ft_print_wstr(wchar_t *str, t_pf *pf)
 {
-	size_t		len;
-	wchar_t		*tmp;
-
 	if (!(str))
-		return (ft_print_s(NULL, pf));
-	len = ft_wstrlen(str);
-	if (pf->prec >= 0)
-		(pf->prec < len ? len = pf->prec : len);
-	if (pf->width < len)
-	{
-		tmp = ft_wstrnew(len);
-		ft_memcpy(tmp, str, len * sizeof(wchar_t));
-	}
-	else
-	{
-		tmp = ft_wstrnew(pf->width);
-		ft_memset(tmp, ' ', pf->width * sizeof(wchar_t));
-		if (pf->minus == 1)
-			ft_memcpy(tmp, str, len * sizeof(wchar_t));
-		else
-			ft_memcpy(&tmp[pf->width - len * sizeof(wchar_t)], str, \
-					len * sizeof(wchar_t));
-	}
-	ft_putwstr(str);
-	len = ft_wstrlen(tmp);
-	return (len);
+		return(ft_print_s(NULL, pf));
+	return(ft_print_s(ft_convert_wstr(str, pf), pf));
 }
 
-int		ft_print_c(char ch, t_pf *pf)
+int		ft_print_c(unsigned char ch, t_pf *pf)
 {
 	size_t			len;
 	char			*tmp;
 	unsigned char	tmpch;
 
 	len = 1;
-	tmpch = (unsigned char)ch;
 	if (pf->width <= 1)
-		ft_putwchar(tmpch);
+		ft_putchar(ch);
 	else
 	{
 		tmp = ft_strnew(pf->width - 1);
-		ft_memset(tmp, ' ', pf->width - 1);
+		(pf->zero) ? ft_memset(tmp, '0', pf->width -1) :\
+			ft_memset(tmp, ' ', pf->width - 1);
 		if (pf->minus == 1)
 		{
-			ft_putchar(tmpch);
+			ft_putchar(ch);
 			ft_putstr(tmp);
 		}
 		else
 		{
 			ft_putstr(tmp);
-			ft_putchar(tmpch);
+			ft_putchar(ch);
 		}
 		len = pf->width;
 		tmp = pf->buff;
@@ -103,6 +81,8 @@ int		ft_print_c(char ch, t_pf *pf)
 
 int		ft_print_wch(wchar_t wch,  t_pf *pf)
 {
+	if (wch == '\0')
+		return (ft_print_c('\0', pf));
 	ft_putwchar(wch);
 	return (ft_wchrlen(wch));
 }
