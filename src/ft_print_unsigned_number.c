@@ -6,7 +6,7 @@
 /*   By: tcase <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/05 16:13:32 by tcase             #+#    #+#             */
-/*   Updated: 2019/05/11 15:35:39 by tcase            ###   ########.fr       */
+/*   Updated: 2019/05/13 13:37:45 by tcase            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ int		ft_printf_basebyletter(t_pf *pf)
 		return (16);
 	if (pf->type == 'o')
 		return (8);
+	if (pf->type == 'b')
+		return (2);
 	return (0);
 }
 

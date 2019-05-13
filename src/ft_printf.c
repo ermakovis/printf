@@ -6,7 +6,7 @@
 /*   By: tcase <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/02 18:03:20 by tcase             #+#    #+#             */
-/*   Updated: 2019/05/12 20:43:34 by tcase            ###   ########.fr       */
+/*   Updated: 2019/05/13 13:37:12 by tcase            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ static int		ft_print_result(va_list valist, t_pf *pf)
 {
 	if (ft_strchr("di", pf->type))
 		return (ft_printf_signed_number(valist, pf));
-	else if (ft_strchr("pouxX", pf->type))
+	else if (ft_strchr("bpouxX", pf->type))
 		return (ft_printf_unsigned_number(valist, pf));
 	else if (ft_strchr("sc%", pf->type))
 		return (ft_print_string(valist, pf));
@@ -82,7 +82,7 @@ int				ft_printf(const char *format, ...)
 	int			i;
 
 	va_start(valist, format);
-	i = ft_printf_cycle(format, valist);
+	i = ft_printf_cycle((char*)format, valist);
 	va_end(valist);
 	return (i);
 }

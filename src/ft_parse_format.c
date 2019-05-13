@@ -6,7 +6,7 @@
 /*   By: tcase <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/03 11:48:30 by tcase             #+#    #+#             */
-/*   Updated: 2019/05/12 20:18:52 by tcase            ###   ########.fr       */
+/*   Updated: 2019/05/13 14:32:18 by tcase            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,10 @@ static int			ft_parse_flags(t_pf *pf, char **line)
 	{
 		if (tmp[i] == ' ')
 			pf->space = 1;
-		if (tmp[i] == '#')
+		if (tmp[i] == '#' && pf->minus == 0)
 			pf->hash = 1;
+		if (tmp[i] == '#' && pf->minus == 1)
+			pf->hash = 2;
 		if (tmp[i] == '-')
 			pf->minus = 1;
 		if (tmp[i] == '+')

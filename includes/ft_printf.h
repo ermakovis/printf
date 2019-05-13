@@ -6,7 +6,7 @@
 /*   By: tcase <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/02 18:39:45 by tcase             #+#    #+#             */
-/*   Updated: 2019/05/12 20:46:13 by tcase            ###   ########.fr       */
+/*   Updated: 2019/05/13 14:48:23 by tcase            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 typedef struct					s_pf
 {
 	char						*buff;
+	char						*tbuff;
 	int							len;
 	int							hash;
 	int							zero;

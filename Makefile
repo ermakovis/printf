@@ -6,7 +6,7 @@
 #    By: tcase <marvin@42.fr>                       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/04/06 11:31:10 by tcase             #+#    #+#              #
-#    Updated: 2019/05/12 20:49:12 by tcase            ###   ########.fr        #
+#    Updated: 2019/05/13 14:04:58 by tcase            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -70,7 +70,7 @@ fclean: clean
 		rm -f $(NAME)
 
 test: all
-	gcc -o test main.c $(NAME) $(FLAGS) && ./test
+	gcc -o test main.c $(NAME) && ./test
 
 vtest: all
 	gcc -o test -ggdb3 -std=c11 main.c $(NAME) $(FLAGS)  && valgrind --leak-check=full ./test

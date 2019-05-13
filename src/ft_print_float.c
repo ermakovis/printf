@@ -6,7 +6,7 @@
 /*   By: tcase <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/11 12:10:46 by tcase             #+#    #+#             */
-/*   Updated: 2019/05/12 20:15:04 by tcase            ###   ########.fr       */
+/*   Updated: 2019/05/13 16:14:53 by tcase            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,11 @@ char			*ft_printf_ftoa(intmax_t num)
 	return (buff);
 }
 
+static int		ft_print_ftoa_prec(char *right, t_pf *pf)
+{
+	if1f	
+}
+
 static int		ft_print_ftoa(long int left, long int right, t_pf *pf)
 {
 	int		llen;
@@ -54,6 +59,8 @@ static int		ft_print_ftoa(long int left, long int right, t_pf *pf)
 	free(tmp);
 	str[llen] = '.';
 	if (!(tmp = ft_printf_ftoa(right)))
+		ft_printf_cleanup(pf);
+	if (!(ft_print_ftoa_prec(right, pf)))
 		ft_printf_cleanup(pf);
 	ft_memcpy(&str[llen + 1], tmp, rlen);
 	free(tmp);

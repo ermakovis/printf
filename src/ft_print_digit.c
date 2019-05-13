@@ -6,7 +6,7 @@
 /*   By: tcase <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/05 12:08:58 by tcase             #+#    #+#             */
-/*   Updated: 2019/05/12 19:01:45 by tcase            ###   ########.fr       */
+/*   Updated: 2019/05/13 15:52:12 by tcase            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ void	ft_printf_dprec(t_pf *pf)
 	int			len;
 	int			flag;
 
+	pf->tbuff = ft_strdup(pf->buff);
 	flag = 0;
 	if (!(ft_strcmp(pf->buff, "")))
 		return ;
@@ -62,7 +63,7 @@ void	ft_printf_udflags(t_pf *pf)
 	int			len;
 
 	len = ft_strlen(pf->buff);
-	if (ft_strchr("poxX", pf->type) != 0 && pf->hash != 1)
+	if (ft_strchr("poxX", pf->type) != 0 && pf->hash == 0)
 		return ;
 	if (pf->type == 'o' && pf->buff[0] != '0')
 	{
@@ -72,10 +73,12 @@ void	ft_printf_udflags(t_pf *pf)
 		free(pf->buff);
 		pf->buff = tmp;
 	}
-	if (((pf->type == 'x' || pf->type == 'X') \
-			&& (ft_strcmp(pf->buff, "0")) && (ft_strcmp(pf->buff, "")))\
-			|| pf->type == 'p')
+	if ((pf->type == 'x' || pf->type == 'X') || pf->type == 'p')
 	{
+		if (!(ft_strcmp(pf->tbuff, "0")) && pf->type != 'p')
+			return ;
+		if (!(ft_strcmp(pf->tbuff, "")) && pf->type != 'p')
+			return ;
 		tmp = ft_strnew(len + 2);
 		ft_memcpy(tmp, "0x", 2);
 		ft_memcpy(&tmp[2], pf->buff, len);
