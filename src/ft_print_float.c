@@ -6,13 +6,13 @@
 /*   By: tcase <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/11 12:10:46 by tcase             #+#    #+#             */
-/*   Updated: 2019/05/13 16:14:53 by tcase            ###   ########.fr       */
+/*   Updated: 2019/05/18 22:16:38 by tcase            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_printf.h"
 
-char			*ft_printf_ftoa(intmax_t num)
+static char		*ft_printf_ftoa(intmax_t num)
 {
 	int		size;
 	char	*buff;
@@ -37,38 +37,53 @@ char			*ft_printf_ftoa(intmax_t num)
 	return (buff);
 }
 
-static int		ft_print_ftoa_prec(char *right, t_pf *pf)
-{
-	if1f	
-}
-
-static int		ft_print_ftoa(long int left, long int right, t_pf *pf)
+static void		ft_printf_comb_float(long int left, long int right, t_pf *pf, t_res *res)
 {
 	int		llen;
 	int		rlen;
-	char	*str;
 	char	*tmp;
 
 	llen = ft_nbrlen(left, 10);
 	rlen = ft_nbrlen(right, 10);
-	if (!(str = ft_strnew(llen + rlen + 2)))
+	if (!(pf->buff = ft_strnew(llen + rlen + 2)))
 		ft_printf_cleanup(pf);
 	if (!(tmp = ft_printf_ftoa(left)))
 		ft_printf_cleanup(pf);
-	ft_memcpy(str, tmp, llen);
+	ft_memcpy(pf->buff, tmp, llen);
 	free(tmp);
-	str[llen] = '.';
+	(pf->buff)[llen] = '.';
 	if (!(tmp = ft_printf_ftoa(right)))
 		ft_printf_cleanup(pf);
-	if (!(ft_print_ftoa_prec(right, pf)))
-		ft_printf_cleanup(pf);
-	ft_memcpy(&str[llen + 1], tmp, rlen);
+	ft_memcpy(&(pf->buff)[llen + 1], tmp, rlen);
 	free(tmp);
-	ft_putstr(str);
-	return (llen + rlen + 1);
 }
 
-int				ft_print_float(double dbl, t_pf *pf)
+static void		ft_printf_w(char *str, t_pf *pf, t_res *res)
+{
+	size_t		len;
+
+	if (!(str))
+		str = "(null)";
+	len = ft_strlen(str);
+	if (pf->width < len)
+		pf->buff = ft_strdup(str);
+	else
+	{
+		pf->buff = ft_strnew(pf->width);
+		(pf->zero) ? ft_memset(pf->buff, '0', pf->width) :\
+			ft_memset(pf->buff, ' ', pf->width);
+		if (pf->minus == 1)
+			ft_memcpy(pf->buff, str, len);
+		else
+			ft_memcpy(&pf->buff[pf->width - len], str, len);
+		len = ft_strlen(pf->buff);
+	}
+	ft_printf_buffer(pf, res, pf->buff, len);
+	if (*pf->buff)
+		free(pf->buff);
+}
+
+void				ft_printf_float(double dbl, t_pf *pf, t_res *res)
 {
 	double		decimal;
 	long int	right;
@@ -83,5 +98,6 @@ int				ft_print_float(double dbl, t_pf *pf)
 	decimal = ((long long int)decimal % 10 > 4) ?\
 		decimal / 10 + 1 : decimal / 10;
 	right = (long long int)decimal;
-	return (ft_print_ftoa(left, right, pf));
+	ft_printf_comb_float(left, right, pf, res);
+	ft_printf_w(pf->buff, pf, res);
 }

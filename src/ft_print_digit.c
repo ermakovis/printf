@@ -6,20 +6,21 @@
 /*   By: tcase <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/05 12:08:58 by tcase             #+#    #+#             */
-/*   Updated: 2019/05/13 15:52:12 by tcase            ###   ########.fr       */
+/*   Updated: 2019/05/19 10:44:38 by tcase            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_printf.h"
 
-void	ft_printf_dprec(t_pf *pf)
+static void		ft_printf_dprec(t_pf *pf)
 {
 	char		*tmp;
 	int			len;
 	int			flag;
 
-	pf->tbuff = ft_strdup(pf->buff);
 	flag = 0;
+	if ((!(ft_strcmp(pf->buff, "0"))) || (!(ft_strcmp(pf->buff, "")))) 
+		pf->eflag = 1;
 	if (!(ft_strcmp(pf->buff, "")))
 		return ;
 	len = ft_strlen(pf->buff);
@@ -36,7 +37,7 @@ void	ft_printf_dprec(t_pf *pf)
 	pf->buff = tmp;
 }
 
-void	ft_printf_dflags(t_pf *pf)
+static void		ft_printf_dflags(t_pf *pf)
 {
 	char		*tmp;
 	int			len;
@@ -57,7 +58,7 @@ void	ft_printf_dflags(t_pf *pf)
 	}
 }
 
-void	ft_printf_udflags(t_pf *pf)
+static void		ft_printf_udflags(t_pf *pf)
 {
 	char		*tmp;
 	int			len;
@@ -75,9 +76,9 @@ void	ft_printf_udflags(t_pf *pf)
 	}
 	if ((pf->type == 'x' || pf->type == 'X') || pf->type == 'p')
 	{
-		if (!(ft_strcmp(pf->tbuff, "0")) && pf->type != 'p')
+		if (pf->eflag == 1 && pf->type != 'p')
 			return ;
-		if (!(ft_strcmp(pf->tbuff, "")) && pf->type != 'p')
+		if (pf->eflag == 1 && pf->type != 'p')
 			return ;
 		tmp = ft_strnew(len + 2);
 		ft_memcpy(tmp, "0x", 2);
@@ -87,7 +88,7 @@ void	ft_printf_udflags(t_pf *pf)
 	}
 }
 
-void	ft_printf_dwidth(t_pf *pf)
+static void		ft_printf_dwidth(t_pf *pf)
 {
 	char		*tmp;
 	int			len;
@@ -116,26 +117,24 @@ void	ft_printf_dwidth(t_pf *pf)
 	pf->buff = tmp;
 }
 
-int		ft_printf_digit(t_pf *pf)
+void		ft_printf_digit(t_pf *pf, t_res *res)
 {
-	int len;
+	int			len;
 
+	len = 0;
 	if (!(ft_strcmp(pf->buff, "0")) && pf->prec == 0)
 	{
-		free(pf->buff);
+		ft_memdel((void**)&(pf->buff));
 		pf->buff = ft_strdup("");
 	}
-	ft_printf_dprec(pf);
+	ft_printf_dprec(pf, buff);
 	ft_printf_dflags(pf);
 	ft_printf_udflags(pf);
 	ft_printf_dwidth(pf);
 	if (pf->type == 'X')
-	{
 		ft_strtoupper(pf->buff);
-	}
 	len = ft_strlen(pf->buff);
-	write(1, pf->buff, len);
+	ft_printf_buffer(pf, res, pf->buff, len);
 	if (*(pf->buff))
 		free(pf->buff);
-	return (len);
 }

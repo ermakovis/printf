@@ -6,52 +6,45 @@
 /*   By: tcase <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/03 11:48:30 by tcase             #+#    #+#             */
-/*   Updated: 2019/05/13 14:32:18 by tcase            ###   ########.fr       */
+/*   Updated: 2019/05/18 20:38:38 by tcase            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_printf.h"
 
-static int			ft_parse_flags(t_pf *pf, char **line)
+static void			ft_parse_flags(t_pf *pf, char *line, t_res *res)
 {
-	int		i;
-	char	*tmp;
-
-	tmp = *line;
-	i = 0;
-	while (tmp[i] == ' ' || tmp[i] == '#' || tmp[i] == '-' \
-			|| tmp[i] == '0' || tmp[i] == '+')
+	//printf("before %d - %c - %s\n", res->len, line[res->len], &line[res->len]);
+	while (line[res->len] == ' ' || line[res->len] == '#' || \
+			line[res->len] == '-' || line[res->len] == '0' || \
+			line[res->len] == '+')
 	{
-		if (tmp[i] == ' ')
+		if (line[res->len] == ' ')
 			pf->space = 1;
-		if (tmp[i] == '#' && pf->minus == 0)
+		if (line[res->len] == '#')
 			pf->hash = 1;
-		if (tmp[i] == '#' && pf->minus == 1)
-			pf->hash = 2;
-		if (tmp[i] == '-')
+		if (line[res->len] == '-')
 			pf->minus = 1;
-		if (tmp[i] == '+')
+		if (line[res->len] == '+')
 			pf->plus = 1;
-		if (tmp[i] == '0')
+		if (line[res->len] == '0')
 			pf->zero = 1;
-		i++;
+		(res->len)++;
 	}
-	*line = &(tmp)[i];
-	return (i);
+	//printf("after %d - %c - %s\n", res->len, line[res->len], &line[res->len]);
 }
 
-static void			ft_parse_width(t_pf *pf, char **line, va_list valist)
+static void			ft_parse_width(t_pf *pf, char *line, t_res *res, va_list valist)
 {
-	char	*tmp;
 	int		i;
 
-	tmp = *line;
-	if (ft_isdigit(tmp[0]))
+	//printf("before %d - %s\n", res->len, &line[res->len]);
+	if (ft_isdigit(line[res->len]))
 	{
-		pf->width = ft_atoi(tmp);
-		tmp += ft_nbrlen(pf->width, 10);
+		pf->width = ft_atoi(&line[res->len]);
+		res->len += ft_nbrlen(pf->width, 10);
 	}
-	if (tmp[0] == '*')
+	if (line[res->len] == '*')
 	{
 		if ((i = va_arg(valist, int)) < 0)
 		{
@@ -59,77 +52,66 @@ static void			ft_parse_width(t_pf *pf, char **line, va_list valist)
 			i = -i;
 		}
 		pf->width = i;
-		tmp++;
+		(res->len)++;
 	}
-	if (ft_isdigit(tmp[0]))
+	if (ft_isdigit(line[res->len]))
 	{
-		pf->width = ft_atoi(tmp);
-		tmp += ft_nbrlen(pf->width, 10);
+		pf->width = ft_atoi(&line[res->len]);
+		res->len += ft_nbrlen(pf->width, 10);
 	}
-	*line = tmp;
+	//printf("after %d - %s\n", res->len, &line[res->len]);
 }
 
-static int			ft_parse_prec(t_pf *pf, char **line, va_list valist)
+static void			ft_parse_prec(t_pf *pf, char *line, t_res *res, va_list valist)
 {
-	char	*tmp;
-
-	tmp = *line;
-	if (tmp[0] != '.')
-	{
-		*line = tmp;
-		return (0);
-	}
+	//printf("before %d - %s\n", res->len, &line[res->len]);
+	if (line[res->len] != '.')
+		return ;
 	pf->prec = 0;
-	tmp++;
-	if (tmp[0] == '*')
+	res->len++;
+	if (line[res->len] == '*')
 	{
 		pf->prec = va_arg(valist, int);
-		tmp++;
+		(res->len)++;
 	}
-	else if (ft_isdigit(tmp[0]))
+	else if (ft_isdigit(line[res->len]))
 	{
-		pf->prec = ft_atoi(tmp);
-		tmp += ft_nbrlen(pf->prec, 10);
+		pf->prec = ft_atoi(&line[res->len]);
+		res->len += ft_nbrlen(pf->prec, 10);
 	}
-	*line = tmp;
-	return (0);
+	//printf("after %d - %s\n", res->len, &line[res->len]);
 }
 
-static int			ft_parse_length(t_pf *pf, char **line)
+static void			ft_parse_length(t_pf *pf, char *line, t_res *res)
 {
-	char	*tmp;
-
-	tmp = *line;
-	if (ft_strncmp(tmp, "l", 1) == 0)
+	//printf("before %d - %s\n", res->len, &line[res->len]);
+	if (ft_strncmp(&line[res->len], "l", 1) == 0)
 		pf->length = 3;
-	if (ft_strncmp(tmp, "h", 1) == 0)
+	if (ft_strncmp(&line[res->len], "h", 1) == 0)
 		pf->length = 4;
-	if (ft_strncmp(tmp, "j", 1) == 0)
+	if (ft_strncmp(&line[res->len], "j", 1) == 0)
 		pf->length = 5;
-	if (ft_strncmp(tmp, "z", 1) == 0)
+	if (ft_strncmp(&line[res->len], "z", 1) == 0)
 		pf->length = 6;
-	if (ft_strncmp(tmp, "ll", 2) == 0)
+	if (ft_strncmp(&line[res->len], "ll", 2) == 0)
 		pf->length = 1;
-	if (ft_strncmp(tmp, "hh", 2) == 0)
+	if (ft_strncmp(&line[res->len], "hh", 2) == 0)
 		pf->length = 2;
 	if (pf->length > 0 && pf->length <= 2)
-		tmp += 2;
+		res->len += 2;
 	else if (pf->length > 2)
-		tmp++;
-	*line = tmp;
-	return (1);
+		(res->len)++;
+	//printf("before %d - %s\n", res->len, &line[res->len]);
 }
 
-int					ft_parse_format(char **line, t_pf *pf, va_list valist)
+void					ft_parse_format(char *line, t_pf *pf, va_list valist, t_res *res)
 {
-	char	*tmp;
-
-	ft_parse_flags(pf, line);
-	ft_parse_width(pf, line, valist);
-	ft_parse_prec(pf, line, valist);
-	ft_parse_length(pf, line);
-	pf->type = (*line)[0];
-	(*line)++;
+	ft_parse_flags(pf, line, res);
+	ft_parse_width(pf, line, res, valist);
+	ft_parse_prec(pf, line, res, valist);
+	ft_parse_length(pf, line, res);
+	pf->type = line[res->len];
+	(res->len)++;
 	if (pf->type == 'p')
 	{
 		pf->length = 1;
@@ -140,5 +122,4 @@ int					ft_parse_format(char **line, t_pf *pf, va_list valist)
 		pf->length = 3;
 		pf->type = ft_tolower(pf->type);
 	}
-	return (1);
 }

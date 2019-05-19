@@ -6,7 +6,7 @@
 /*   By: tcase <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/06 21:41:48 by tcase             #+#    #+#             */
-/*   Updated: 2019/05/10 20:52:07 by tcase            ###   ########.fr       */
+/*   Updated: 2019/05/19 10:12:06 by tcase            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ char		*ft_strnew(size_t size)
 
 	p = NULL;
 	if (!size)
-		return ("");
+		return (ft_strdup(""));
 	if ((int)size < 0)
 		return (NULL);
 	if (!(p = (char*)malloc(size + 1)))

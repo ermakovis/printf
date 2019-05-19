@@ -6,7 +6,7 @@
 /*   By: tcase <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/02 18:03:20 by tcase             #+#    #+#             */
-/*   Updated: 2019/05/13 13:37:12 by tcase            ###   ########.fr       */
+/*   Updated: 2019/05/19 10:27:55 by tcase            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ static t_pf		*init_pf(void)
 	if (!(new = (t_pf*)malloc(sizeof(t_pf))))
 		return (NULL);
 	new->buff = NULL;
+	new->eflag = 0;
 	new->len = 0;
 	new->hash = 0;
 	new->zero = 0;
@@ -32,57 +33,89 @@ static t_pf		*init_pf(void)
 	return (new);
 }
 
-static int		ft_print_result(va_list valist, t_pf *pf)
+static void		ft_print_result(va_list valist, t_pf *pf, t_res *res)
 {
 	if (ft_strchr("di", pf->type))
-		return (ft_printf_signed_number(valist, pf));
+		ft_printf_signed_number(valist, pf, res);
 	else if (ft_strchr("bpouxX", pf->type))
-		return (ft_printf_unsigned_number(valist, pf));
+		ft_printf_unsigned_number(valist, pf, res);
 	else if (ft_strchr("sc%", pf->type))
-		return (ft_print_string(valist, pf));
+		ft_printf_string(valist, pf, res);
 	else if (ft_strchr("fF", pf->type))
-		return (ft_print_float(va_arg(valist, double), pf));
+		ft_printf_float(va_arg(valist, double), pf, res);
 	else
-		return (ft_print_c(pf->type, pf));
-	return (0);
+		ft_printf_c(pf->type, pf, res);
 }
 
-static int		ft_printf_cycle(char *line, va_list valist)
+void			ft_printf_buffer(t_pf *pf, t_res *res, char *buff, int len)
 {
-	int			i;
+	char		*tmp;
+
+	if (!(tmp = ft_strnew(res->bufflen + len)))
+		ft_printf_cleanup(pf);
+	ft_memcpy(tmp, res->str, res->bufflen);
+	ft_memcpy(&tmp[res->bufflen], buff, len);
+	ft_memdel((void**)&(res->str));
+	res->str = tmp;
+	res->bufflen += len;
+}
+
+static int		ft_printf_cycle(char *line, va_list valist, t_res *res)
+{
 	t_pf		*pf;
+	int			i;
 
 	i = 0;
-	while (*line)
+	while (line[res->len])
 	{
-		if (*line == '%')
+		if (line[res->len] == '%')
 		{
 			if (!(pf = init_pf()))
 				return (-1);
-			line++;
-			if (!*line)
-				return (i);
-			if (ft_parse_format(&line, pf, valist))
-				i += ft_print_result(valist, pf);
-			free(pf);
+			if (!line[res->len + 1])
+				return (res->len);
+			(res->len)++;
+			ft_parse_format(line, pf, valist, res);
+			ft_print_result(valist, pf, res);
+			ft_memdel((void**)&pf);
+		}
+		else if ((i = ft_strclen(&line[res->len], "%"))) 
+		{
+			i--;
+			ft_printf_buffer(pf, res, &line[res->len], i);
+			res->len += i;
 		}
 		else
 		{
-			ft_putchar(*line);
-			line++;
-			i++;
+			i = ft_strlen(&line[res->len]);
+			ft_printf_buffer(pf, res, &line[res->len], i);;
+			res->len += i;
 		}
 	}
-	return (i);
+	return (res->bufflen);
 }
 
 int				ft_printf(const char *format, ...)
 {
 	va_list		valist;
+	t_res		*res;
 	int			i;
 
+	if (!(res = (t_res*)malloc(sizeof(t_res))))
+		return (-1);
+	res->str = NULL;
+	res->len = 0;
+	res->bufflen = 0;
+	if (!(res->str = ft_strnew(0)))
+	{
+		free(res);
+		return (-1);
+	}
 	va_start(valist, format);
-	i = ft_printf_cycle((char*)format, valist);
+	i = ft_printf_cycle((char*)format, valist, res);
 	va_end(valist);
+	write(1, res->str, res->bufflen);
+	ft_memdel((void**)&(res->str));
+	ft_memdel((void**)&res);
 	return (i);
 }

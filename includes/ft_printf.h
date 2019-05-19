@@ -6,7 +6,7 @@
 /*   By: tcase <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/02 18:39:45 by tcase             #+#    #+#             */
-/*   Updated: 2019/05/13 14:48:23 by tcase            ###   ########.fr       */
+/*   Updated: 2019/05/18 22:23:56 by tcase            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 typedef struct					s_pf
 {
 	char						*buff;
-	char						*tbuff;
+	int							eflag;
 	int							len;
 	int							hash;
 	int							zero;
@@ -34,24 +34,32 @@ typedef struct					s_pf
 	char						type;
 }								t_pf;
 
-int								ft_print_c(unsigned char ch, t_pf *pf);
-int								ft_print_s(char *str, t_pf *pf);
+typedef struct					s_res
+{
+	int							len;
+	int							bufflen;
+	char						*str;
+}								t_res;
+
+int								ft_printf(const char *format, ...);
+void							ft_printf_digit(t_pf *pf, t_res *res);
+void							ft_printf_string(va_list valist, t_pf *pf, t_res *res);
+void							ft_printf_s(char *str, t_pf *pf, t_res *res);
+void							ft_printf_c(unsigned char ch, t_pf *pf, t_res *res);
+void							ft_printf_float(double dbl, t_pf *pf, t_res *res);
+void							ft_printf_buffer(t_pf *pf, t_res *res, char *buff, int len);
 int								ft_wchrlen(wchar_t wch);
 int								ft_wstrlen(wchar_t *wstr);
 char							*ft_convert_wchar(wchar_t wch, int len);
 char							*ft_convert_wstr(wchar_t *wstr, t_pf *pf);
 void							ft_putwchar(wchar_t wch);
-int								ft_printf_uitoa(uintmax_t num, t_pf *pf);
-int								ft_print_string(va_list valist, t_pf *pf);
-int								ft_printf_digit(t_pf *pf);
-int								ft_parse_format(char **line, t_pf *pf,\
-									va_list valist);
-int								ft_printf(const char *format, ...);
-int								ft_print_float(double dbl, t_pf *pf);
-int								ft_printf_unsigned_number(va_list valist,\
-									t_pf *pf);
-int								ft_printf_signed_number(va_list valist, \
-									t_pf *pf);
+//int								ft_printf_uitoa(uintmax_t num, t_pf *pf);
+void							ft_parse_format(char *line, t_pf *pf,\
+									va_list valist, t_res *res);
+void							ft_printf_unsigned_number(va_list valist,\
+									t_pf *pf, t_res *res);
+void							ft_printf_signed_number(va_list valist, \
+									t_pf *pf, t_res *res);
 void							ft_printf_cleanup(t_pf *pf);
 
 #endif
